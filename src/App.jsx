@@ -1,8 +1,7 @@
-// import { useState } from 'react'
 import Header from './components/Header'
-import Home from './components/Home'
 import Register from './components/Register'
 import {Routes,Route} from 'react-router-dom'
+import Home from './components/Home'
 
 function App() {
   return (
@@ -12,7 +11,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/register' element={<Register/>}/>
       </Routes>
-    </>
+      </>
   )
 }
 

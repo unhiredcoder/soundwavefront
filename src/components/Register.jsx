@@ -39,7 +39,12 @@ const Register = () => {
         body: formData,
       };
 
-      let response = await fetch('http://localhost:4000/upload', options);
+
+      //  ⚠️⚠️⚠️THIS MAY NOT WORK COZ VERCEL NOT PROVIDE CLOUD STORAGE TO HANDLE FILE UPLOADS ⚠️⚠️⚠️
+      // cosnt link="https://soundwaves-unhiredcoder.vercel.app"
+      const link = "http://localhost:4000"
+
+      let response = await fetch(`${link}/upload`, options);
       if (!response.ok) {
         savedata.innerText = "Submit"
         alert("Please fill all the fields!")
@@ -59,11 +64,11 @@ const Register = () => {
 
   return (
     <>
-      <motion.div 
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', minHeight: '70vh' }}>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', minHeight: '70vh' }}>
         <h1 className='text-xl text-red-500 font-bold text-center '>Upload Your Image and Audio Here*</h1>
         <form onSubmit={handleSubmit} className='container mt-12 max-w-md mx-auto bg-white p-4 rounded shadow'>
           <div className='mb-4'>

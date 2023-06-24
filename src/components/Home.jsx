@@ -7,31 +7,37 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
+
+  // cosnt link="https://soundwaves-unhiredcoder.vercel.app"
+  //  ⚠️⚠️⚠️THIS MAY NOT WORK COZ VERCEL NOT PROVIDE CLOUD STORAGE TO HSNDLE FILE UPLOADS ⚠️⚠️⚠️
+  const link = "http://localhost:4000"
+
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:4000/users');
-    
-    if (!response.ok) {
-      throw new Error('Error retrieving users.');
-    }
+      const response = await fetch(`${link}/users`);
+
+      if (!response.ok) {
+        throw new Error('Error retrieving users.');
+      }
       const data = await response.json();
       setUsers(data);
-      setIsLoading(false);
+      // setIsLoading(false);
     } catch (error) {
       console.error('Error:', error);
     }
   };
+  console.log(users);
 
   const deleteUser = async (user) => {
     try {
-      const response = await fetch(`http://localhost:4000/delete`, {
+      const response = await fetch(`https://soundwaves-unhiredcoder.vercel.app/delete`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(user),   // sending whole object to backend , backend will get id , image ,audio and dellete from uplods folder 
       });
-  
+
       if (response.ok) {
         console.log('User deleted successfully');
         fetchUsers();
@@ -42,7 +48,7 @@ const Home = () => {
       console.log(`Error deleting user: ${error.message}`);
     }
   };
-  
+
 
   useEffect(() => {
     fetchUsers();
@@ -76,12 +82,12 @@ const Home = () => {
         </motion.div>
       </AnimatePresence>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-        {!filteredUsers.length > 0 ? (
+        {!users.length > 0 ? (
           <div
             className='not-found'
           >Not Found ❌</div>
         ) : (
-          filteredUsers.map((user) => (
+          users.map((user) => (
             <motion.div
               key={user._id}
               className="p-4"
@@ -93,7 +99,7 @@ const Home = () => {
               <div className="mycls bg-gray-100 p-6 rounded-lg">
                 <img
                   className="h-40 rounded w-full object-contain object-center mb-6"
-                  src={isLoading ? "./Spinner.svg" : `http://localhost:4000/uploads/${user.image}`}
+                  src={isLoading ? "./Spinner.svg" : `${link}/uploads/${user.image}`}
                   alt="content"
                 />
                 <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
@@ -102,7 +108,7 @@ const Home = () => {
                 <h2 className="text-l text-gray-900 font-small title-font my-2">{user.username}</h2>
                 <div className="audio-container">
                   <audio controls className="responsive-audio">
-                    <source src={`http://localhost:4000/uploads/${user.audio}`} type="audio/mpeg" />
+                    <source src={`${link}/uploads/${user.audio}`} type="audio/mpeg" />
                   </audio>
                 </div>
                 <button
